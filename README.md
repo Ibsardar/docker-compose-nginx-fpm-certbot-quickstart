@@ -1,28 +1,33 @@
 # docker-compose-nginx-fpm-certbot-quickstart
  Docker Composed App with NGINX, PHP-FPM, and auto-renewing SSL via Certbot
 
-### Quickstart:
-Drop the contents of 'drop-into-your-project' into your project.
+---
 
-Edit as needed using the **guidelines below**.
+## Quickstart:
+- Drop the contents of 'drop-into-your-project' into your project.
 
-Login to machine where docker-compose is installed.
+- Edit as needed using the **guidelines below**.
 
-Pull your project (after the drop + any edits) onto the server.
+- Login to machine where docker-compose is installed.
 
-Navigate to your project's main directory (where docker-compose.yml is).
+- Pull your project (after the drop + any edits) onto the server.
 
-Run `chmod +x init-letsencrypt.sh` so you can run the next command
+- Navigate to your project's main directory (where docker-compose.yml is).
 
-Run `./init-letsencrypt.sh` to get SSL certifcate(s)
+- Run `chmod +x init-letsencrypt.sh` so you can run the next command
 
-If you receive an error:
-- Make sure etc\letsencrypt\<dnsprovider>.ini exists and is correctly matching the API key given by your DNS provider
-- If you are not using DNS, make sure in `dns_cred_path` is set to an empty string in `init-letsencrypt.sh`
+- Run `./init-letsencrypt.sh` to get SSL certifcate(s)
 
-Run `docker-compose build && docker-compose up`
+- If you receive an error:
 
-### What-to-Edit Guide:
+  - Make sure etc\letsencrypt\<dnsprovider>.ini exists and is correctly matching the API key given by your DNS provider
+  - If you are not using DNS, make sure in `dns_cred_path` is set to an empty string in `init-letsencrypt.sh`
+
+- Run `docker-compose build && docker-compose up`
+
+---
+
+## What-to-Edit Guide:
 
 File | Detail | Example
 --- | --- | ---
@@ -42,7 +47,9 @@ init-letsencrypt.sh | Set your email by replacing "your@email.com" | *johndoe@gm
 init-letsencrypt.sh | Set staging=1 if you just want to test generating fake certificates | *staging=1*
 init-letsencrypt.sh | Replace all instances of "digitalocean" with the name of you DNS provider (see comments in the script file for more details) | *cloudflare*
 
-### Troubleshoot:
+---
+
+#### Troubleshoot:
 Run `docker-compose config --services` to check the names of services.
 
 Run `docker-compose ps` to check the status of the services.
@@ -55,7 +62,9 @@ Run `docker-compose build --no-cache && docker-compose up` to rebuild everything
 
 Run `docker system prune` to clean up everything docker related on your machine
 
-### Some Credits:
+---
+
+#### Some Credits:
 
 - https://github.com/wmnnd/nginx-certbot
 
