@@ -1,13 +1,12 @@
 # docker-compose-nginx-fpm-certbot-quickstart
  Docker Composed App with NGINX, PHP-FPM, and auto-renewing SSL via Certbot
 
-### How to use:
+### Quickstart:
 Drop the contents of 'drop-into-your-project' into your project.
 
 Edit as needed using the **guidelines below**.
 
-### Quickstart:
-Login to your machine.
+Login to machine where docker-compose is installed.
 
 Pull your project (after the drop + any edits) onto the server.
 
