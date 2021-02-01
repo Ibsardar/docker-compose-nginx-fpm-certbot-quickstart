@@ -4,15 +4,15 @@
 ---
 
 ## Quickstart:
-- Drop the contents of 'drop-into-your-project' into your project.
+- Drop the contents of `drop-into-your-project` into your project.
 
-- Edit as needed using the **guidelines below**.
+- Edit as needed using the **[guidelines below](https://github.com/Ibsardar/docker-compose-nginx-fpm-certbot-quickstart#what-to-edit-guide)**.
 
 - Login to machine where docker-compose is installed.
 
 - Pull your project (after the drop + any edits) onto the server.
 
-- Navigate to your project's main directory (where docker-compose.yml is).
+- Navigate to your project's main directory (where `docker-compose.yml` is).
 
 - Run `chmod +x init-letsencrypt.sh` so you can run the next command
 
@@ -20,7 +20,7 @@
 
 - If you receive an error:
 
-  - Make sure etc\letsencrypt\<dnsprovider>.ini exists and is correctly matching the API key given by your DNS provider
+  - Make sure `etc\letsencrypt\<dnsprovider>.ini` exists and is correctly matching the API key given by your DNS provider
   - If you are not using DNS, make sure in `dns_cred_path` is set to an empty string in `init-letsencrypt.sh`
 
 - Run `docker-compose build && docker-compose up`
