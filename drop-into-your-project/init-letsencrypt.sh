@@ -130,7 +130,7 @@ function reload_nginx {
     YELO='\033[1;33m'
     CYAN='\033[0;36m'
     NO='\033[0m' # No Color
-    echo "### ${YELO}Nothing to Reload${NO}...(you probably just ran this before running '${CYAN}docker-compose build${NO}')"
+    echo -e "### ${YELO}Nothing to Reload${NO}...(you probably just ran this before running '${CYAN}docker-compose build${NO}')"
   fi
 }
 
