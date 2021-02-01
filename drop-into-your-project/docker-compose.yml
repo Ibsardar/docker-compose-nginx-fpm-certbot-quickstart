@@ -1,0 +1,147 @@
+version: '3.9'
+
+
+x-nginx-root: &nginx-root
+
+  NGINX_ROOT: /my/custom/root # make sure /server/vhost.conf uses a root that at least prepends this root
+
+
+x-global-restart-behaviour: &global-restart-behaviour
+
+  restart: "no"
+
+
+services:
+
+
+  nginx_service:
+
+
+    container_name: nginx_service_container
+
+
+# NOT NEEDED AS EVERYTHING IS ALREADY ON THE DEFAULT NETWORK
+#    networks:
+#
+#      # make these services discoverable to each other
+#      - nginx_with_phpfpm
+
+
+    build:
+
+      # path to Dockerfile from this file
+      context: .
+      
+      # name of Dockerfile
+      dockerfile: ./dockerfiles/nginx.Dockerfile
+
+      args:
+
+        # can use variables defined below in the Dockerfile or here
+        <<: *nginx-root
+
+
+    ports:
+    
+      # map host's port 80 (left) to container's port 80 (right)
+      # ...container port and host port are expected to be open...
+      - "80:80"
+    
+      # same as above: maps external port <-> internal port
+      - "443:443"
+
+
+    # map each named volume to a specified folder/file in container
+    volumes:
+
+      - /docker/volumes/nginx_logs:/var/log/nginx # map host server dir to container dir...
+      
+      - ./server/vhost.conf:/etc/nginx/conf.d/default.conf # map host server file to container file...
+      
+      - ./server/certbot/conf:/etc/letsencrypt # map host server dir to container dir...
+      
+      - ./server/certbot/www:/var/www/certbot # map host server dir to container dir...
+
+
+# LINKS IS DEPRECATED, USING NETWORKS INSTEAD !
+#    links:
+#    
+#      - phpfpm_service
+
+
+    <<: *global-restart-behaviour
+
+
+    depends_on: 
+
+      # this is a dependency because we are referencing its container in nginx's default.conf file
+      - phpfpm_service
+
+
+  phpfpm_service:
+
+
+    container_name: phpfpm_service_container
+
+
+# NOT NEEDED AS EVERYTHING IS ALREADY ON THE DEFAULT NETWORK
+#    networks:
+#
+#      # make these services discoverable to each other
+#      - nginx_with_phpfpm
+
+
+    build:
+      
+      context: .
+      
+      dockerfile: ./dockerfiles/phpfpm.Dockerfile
+
+      args:
+
+        <<: *nginx-root
+
+
+# DON'T NEED TO EXPOSE ANYTHING TO THE HOST !
+#    ports:
+#
+#      - "9000:9000" (HOST:CONTAINER)
+
+
+# TO AVOID PERSISTING THE ROOT CONTENT, INSTEAD WE COPY THIS IN THE DOCKERFILE
+#    volumes:
+#
+#      - ./:/my/custom/root/ # map everything here to the nginx root folder and back...
+
+
+    <<: *global-restart-behaviour
+
+
+  certbot_service:
+
+
+    container_name: certbot_service_container
+
+
+    build:
+      
+      context: .
+      
+      dockerfile: ./dockerfiles/certbot.Dockerfile
+
+      args:
+
+        <<: *nginx-root
+
+
+    volumes:
+
+      - ./server/certbot/conf:/etc/letsencrypt
+      
+      - ./server/certbot/www:/var/www/certbot
+      
+      # comment out if you are running certbot/certbot instead of certbot/dns-dnsprovider in "init-letsencrypt.sh"
+      - /etc/letsencrypt/digitalocean.ini:/etc/letsencrypt/digitalocean.ini
+
+
+    <<: *global-restart-behaviour
