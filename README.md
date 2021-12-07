@@ -31,7 +31,7 @@
 
 File | Detail | Example
 --- | --- | ---
-`dockerfiles/*.Dockerfile` | Change `"IBRAHIM"` unless it is your name also (yay!) | `LABEL MAINTAINER="JOHN DOE"`
+`dockerfiles/*.Dockerfile` | Change `"IBRAHIM"` unless it is your name also (!) | `LABEL MAINTAINER="JOHN DOE"`
 `dockerfiles/phpfpm.Dockerfile` | Uncomment `#ENTRYPOINT sh "${E_NGINX_ROOT}/server/init_phpfpm.sh"` if you want to have a custom entrypoint there instead of the default entrypoint (command(s) would be specified in `server/init_phpfpm.sh`) | `ENTRYPOINT sh "${E_NGINX_ROOT}/server/init_phpfpm.sh"`
 `server/init_*.sh` | Add your own set of commands to be run (will be run every time the container is started) | `echo container started!`
 `server/vhost.conf` | Replace all instances of `example.org` with your website name | `example.org`
